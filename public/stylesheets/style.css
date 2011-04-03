@@ -208,3 +208,7 @@ article header{
 .invisible { visibility: hidden; }
 .clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
 .clearfix:after { clear: both; }.clearfix { zoom: 1; }
+
+#new_course #course_code, #new_course #course_submit {
+    font-size: 28px;
+}
