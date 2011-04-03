@@ -75,7 +75,7 @@ button {  width: auto; overflow: visible; }
 
 body, select, input, textarea {  color: #444; }
 h1, h2, h3, h4, h5, h6 { font-weight: bold; }
-a, a:active, a:visited { color: #607890; }
+a, a:active, a:visited { text-decoration:none; color: #607890; }
 a:hover { color: #036; }
 
 /*
@@ -211,4 +211,21 @@ article header{
 
 #new_course #course_code, #new_course #course_submit {
     font-size: 28px;
+}
+
+.course {
+    display: inline-block;
+    font-size: 30px;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    padding: 6px;
+    margin: 8px 12px 8px 0;
+    background-color: rgba(0,0,0, 0.2);
+}
+
+.course:hover {
+    -moz-transform: scale(1.5);
+    -webkit-transform: scale(1.5);
+    background-color: rgba(128, 128, 128, 0.7);
 }

@@ -10,8 +10,8 @@ module NavigationHelpers
 
     when /the home\s?page/
       '/'
-    when /the new course page/
-      new_course_path
+    when /the course details page/
+      course_path(Course.find_by_code("VALID-COURSE"))
 
 
     # Add more mappings here.
