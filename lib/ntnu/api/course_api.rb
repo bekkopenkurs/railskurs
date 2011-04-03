@@ -4,10 +4,12 @@ require 'net/http'
 
 module NTNU
   module API
+    class IllegalCourseCodeException < StandardError; end
     class CourseNotFoundException < StandardError; end
     class CouldNotParseCourseException < StandardError; end
 
     COURSES_URI = "http://www.ime.ntnu.no/api/course"
+    COURSE_CODE_REGEX = /^[a-z]{3}\d{4}$/i
 
     class CourseClient
       def CourseClient.get(code)
@@ -27,10 +29,10 @@ module NTNU
     protected
 
     class Request
-      attr_accessor :code, :uri
+      attr_accessor :uri
       def initialize(code)
-        @code = code.downcase
-        @uri  = URI.parse("#{COURSES_URI}/#{@code}")
+        raise IllegalCourseCodeException.new("Illegal course code format ('ABC1234')") unless code =~ COURSE_CODE_REGEX
+        @uri  = URI.parse("#{COURSES_URI}/#{code}")
       end
     end
 
@@ -43,21 +45,21 @@ module NTNU
         @course = parse_course
       end
 
-      private
+      protected
 
       def parse_course
         course = @json['course']
         raise CourseNotFoundException if course.empty?
         require 'course'
         begin
-        Course.new ({
-            :code => value_of(course, 'code'),
-            :name => value_of(course, 'englishName'),
-            :credit => value_of(course, 'credit'),
-            :assessments => value_of(course, 'assessment').size,
-            :mandatory_activities => value_of(course, 'mandatoryActivity').size,
-            :teacher => parse_teacher
-        })
+          Course.new ({
+              :code => value_of(course, 'code'),
+              :name => value_of(course, 'englishName'),
+              :credit => value_of(course, 'credit'),
+              :assessments => value_of(course, 'assessment').size,
+              :mandatory_activities => value_of(course, 'mandatoryActivity').size,
+              :teacher => parse_coordinator(course)
+          })
         rescue
           raise CouldNotParseCourseException
         end
@@ -68,10 +70,12 @@ module NTNU
         elem[field]
       end
 
-      def parse_teacher
-        person = @json['course']['educationalRole'].first['person'] || { 'firstName' => '', 'lastName' => '' }
-        "#{person['firstName']} #{person['lastName']}"
+      def parse_coordinator(course)
+        educational_role = value_of(course, 'educationalRole').select { |e| e['code'] =~ /Coordinator/ }.first
+        person = value_of(educational_role, 'person')
+        "#{value_of(person, 'firstName')} #{value_of(person, 'lastName')}"
       end
+
     end
 
   end

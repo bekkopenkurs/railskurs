@@ -2,7 +2,7 @@
 require "rspec"
 require 'spec_helper'
 
-require "ntnu/api/course_api"
+require 'ntnu/api/course_api'
 require 'course'
 
 module NTNU
@@ -29,35 +29,35 @@ module NTNU
       
       subject do
         data = <<-EOS
-                  {
-                    "course": {
-                      "code": "TDT4220",
-                      "name": "Ytelsesvurdering",
-                      "englishName": "Computer Systems Performance Evaluation",
-                      "versionCode": "1",
-                      "credit": 7.5,
-                      "creditTypeCode": "SP",
-                      "gradeRule": "30",
-                      "gradeRuleText": "Bokstavkarakterer",
-                      "assessment": [
-                        {"code": "MAPPE-1","codeName": "Mappeevaluering" },
-                        {"code": "MAPPE-2","codeName": "Mappeevaluering" }
-                      ],
-                      "mandatoryActivity": [
-                        { "number": 1, "name": "\u00d8vinger" }
-                      ],
-                      "educationalRole": [
-                        {
-                          "code": "Coordinator",
-                          "person": {
-                            "firstName": "Gunnar",
-                            "lastName": "Brataas",
-                            "email": "gunnar.brataas@idi.ntnu.no"
-                          }
-                        }
-                      ]
-                    }
+          {
+            "course": {
+              "code": "TDT4220",
+              "name": "Ytelsesvurdering",
+              "englishName": "Computer Systems Performance Evaluation",
+              "versionCode": "1",
+              "credit": 7.5,
+              "creditTypeCode": "SP",
+              "gradeRule": "30",
+              "gradeRuleText": "Bokstavkarakterer",
+              "assessment": [
+                {"code": "MAPPE-1","codeName": "Mappeevaluering" },
+                {"code": "MAPPE-2","codeName": "Mappeevaluering" }
+              ],
+              "mandatoryActivity": [
+                { "number": 1, "name": "\u00d8vinger" }
+              ],
+              "educationalRole": [
+                {
+                  "code": "Coordinator",
+                  "person": {
+                    "firstName": "Gunnar",
+                    "lastName": "Brataas",
+                    "email": "gunnar.brataas@idi.ntnu.no"
                   }
+                }
+              ]
+            }
+          }
         EOS
         Parser.new(data)
       end
@@ -87,14 +87,14 @@ module NTNU
     describe Request do
       subject { NTNU::API::Request.new('TDT4220') }
 
-      it "should lowercase course code" do
-        subject.code.should eq "tdt4220"
+      it "should require valid code" do
+        expect { NTNU::API::Request.new('TDTX0000') }.to raise_exception(NTNU::API::IllegalCourseCodeException)
       end
 
-      it "should set request uri" do
+      it "should generate request uri from code" do
         subject.uri.host.should eq "www.ime.ntnu.no"
         subject.uri.port.should eq 80
-        subject.uri.path.should eq "/api/course/tdt4220"
+        subject.uri.path.should eq "/api/course/TDT4220"
       end
 
     end
