@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(:version => 20110403152636) do
   create_table "courses", :force => true do |t|
     t.string   "code"
     t.string   "name"
-    t.integer  "credit"
+    t.float    "credit"
     t.integer  "assessments"
     t.integer  "mandatory_activities"
     t.string   "teacher"
