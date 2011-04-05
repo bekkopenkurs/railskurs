@@ -17,7 +17,7 @@ module NTNU
       def CourseClient.get_course(code)
         json = JSON.parse(do_http(Request.new(code)))
         require 'ntnu/api/parser'
-        CourseParser.parse_json(json)
+        CourseParser.new(json).parse
       end
 
       private
