@@ -70,8 +70,6 @@ module NTNU
         subject.parse.mandatory_activities.should eq 1
         subject.parse.teacher.should eq "Gunnar Brataas"
       end
-
     end
-
   end
 end

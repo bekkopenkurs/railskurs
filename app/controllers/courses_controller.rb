@@ -44,7 +44,7 @@ class CoursesController < ApplicationController
     #@course = Course.new(params[:course])
     # TODO Implement logic for getting course here
     course_code = params[:course][:code]
-    # @course = NTNU::API::CourseClient.getCourse(course_code)
+            # @course = NTNU::API::CourseClient.getCourse(course_code)  
 
     respond_to do |format|
       if @course.save

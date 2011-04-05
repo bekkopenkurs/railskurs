@@ -19,7 +19,6 @@ module NTNU
         subject.uri.port.should eq 80
         subject.uri.path.should eq "/api/course/TDT4220"
       end
-
     end
 
     @integration
@@ -29,8 +28,6 @@ module NTNU
       it "should retrieve a rubified JSON tree" do
         subject.should be_a Hash
       end
-
     end
-
   end
 end
