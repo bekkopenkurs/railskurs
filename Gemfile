@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.0.5'
-gem 'jquery-rails', '>= 0.2.6'
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
@@ -29,9 +29,25 @@ gem 'sqlite3'
 # group :development, :test do
 #   gem 'webrat'
 # end
+#group :test do
+#    gem 'cucumber-rails'
+#    gem 'capybara'
+#    gem 'database_cleaner'
+#    gem 'rspec-rails'
+#end
+# gem 'jquery-rails', '>= 0.2.6'
+
+gem "jquery-rails"
+
+group :test, :development do
+  gem "cucumber-rails",   "~> 0.4.1"
+  gem "rspec-rails",      "~> 2.5"
+end
+
+
 group :test do
-    gem 'cucumber-rails'
-    gem 'capybara'
-    gem 'database_cleaner'
-    gem 'rspec-rails'
+  gem "capybara",         "~> 0.4.1.2"
+  gem "database_cleaner", "~> 0.6.6"
+  gem "factory_girl",     "~> 1.3.3"
+  gem "shoulda-matchers"
 end
