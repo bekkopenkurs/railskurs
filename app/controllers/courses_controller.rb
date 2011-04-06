@@ -42,9 +42,11 @@ class CoursesController < ApplicationController
   # POST /courses.xml
   def create
     #@course = Course.new(params[:course])
-    # TODO Implement logic for getting course here
+
+    require 'ntnu/api/client'
+
     course_code = params[:course][:code]
-            # @course = NTNU::API::CourseClient.getCourse(course_code)  
+    @course = NTNU::API::CourseClient.get_course(course_code)
 
     respond_to do |format|
       if @course.save

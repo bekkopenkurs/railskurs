@@ -7,5 +7,5 @@ Feature: Create course
     Given I am on the home page
     When I fill in "TDT4220" for "course_code"
     And I press "Get course"
-    Then I should be on the new course page
+    Then I should be on the course page for "TDT4220"
     And I should see "TDT4220"

@@ -13,7 +13,10 @@ module NavigationHelpers
     when /the course details page/
       course_path(Course.find_by_code("VALID-COURSE"))
 
+    when /the course page for "TDT4220"/
+      course_path(Course.find_by_code("TDT4220"))
 
+        
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
